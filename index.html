@@ -16,12 +16,78 @@
   <script src="./vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="./vendor/underscore.js" type="text/javascript" charset="utf-8"></script>
   <script src="./vendor/backbone.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://raw.github.com/gist/3182810/95fbc0af043412d5083be2669b7cd5d0c771f9ee/ajax_events.js" type="text/javascript" charset="utf-8"></script>
   <script src="./lib/bbsearch.js" type="text/javascript" charset="utf-8"></script>
+
+
+  <style>
+
+    .arrow-up {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #ccc;
+    }
+
+    div#results {
+      width: 560px;
+      border: 1px solid #ccc;
+    }
+
+    div.result{
+     padding: 5px;
+     border-bottom: 1px dotted #ccc;
+     width: 560px;
+     overflow: hidden;
+     background-color: white;
+     box-sizing: border-box;
+    }
+
+    div.result:hover {
+      background-color: #ccc;
+      cursor: pointer;
+    }
+
+    div.result:hover div.content h1 {
+      color: white;
+    }
+
+    div.result div.avatar {
+      float: left;
+      width: 60px;
+    }
+
+    div.result div.avatar img{
+      width: 60px;
+      height: 60px;
+    }
+
+    div.result div.content {
+      float: left;
+      width: 480px;
+      margin-left: 10px;
+    }
+
+    div.result div.content h1 {
+      font-size: 12px;
+      color: #ccc;
+      margin-bottom: 5px;
+    }
+
+    div.result div.content p {
+      color: black;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 16px
+    }
+  </style>
+
 </head>
 <body>
   <div id="container">
     <h1>BBSearch</h1>
-    <h2>BBSearch is a jQuery plugin that takes an input-field and transform it into an auto-search element based on Backbone</h2>
+    <h2>BBSearch is a jQuery plugin that takes an input-field and transform it into a remote-auto-search element based on Backbone</h2>
     <p>
       <ul>
         <li><a href="https://github.com/fguillen/BBSearch">BBSearch's code</a></li>
@@ -36,7 +102,7 @@
 <pre>
 $(&lt;selector&gt;).bbsearch({
   url:              &lt;* url of the search API, the search query will be sent into a 'q' param&gt;,
-  itemTemplate:     &lt;* Underscore template for the result elements&gt;,
+  itemTemplate:     &lt;* Underscore-style template for the result elements&gt;,
   resultsElement:   &lt;* The results container element, an 'ul' element will be appended to it&gt;,
   loadingElement:   &lt;The loading element will be shown and hidden while fetching&gt;
   onClick:          &lt;onclick handler&gt;,
@@ -49,20 +115,36 @@ $(&lt;selector&gt;).bbsearch({
 
     <section>
       <h1>Twitter Search API</h1>
-      <p>This auto-serach element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
+      <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
       Click any letter on it and wait for results.</p>
       <input id="search-input" class="big" />
-      <div id="results"></div>
+      <div id="results-wrapper">
+        <div class="arrow-up"></div>
+        <div id="results"></div>
+      </div>
 
       <script>
         $(function(){
           $("#search-input").bbsearch({
-            url: "http://search.twitter.com/search.json",
-            itemTemplate: "<strong>@<%= from_user %></strong> <%= text %>",
+            url: "http://search.twitter.com/search.json?callback=?&q=",
+            itemTemplate: $("#template-result").html(),
             resultsElement: "#results",
+            onClick: function( model ){ console.log( "handler", model ); $("#search-input").val( model.get( "text" ) ) },
             parse: function( response ){ return response.results; },
           });
         })
+      </script>
+
+      <script type="text/template" id="template-result">
+        <div class="result" id="result-<%= id %>">
+          <div class="avatar">
+            <img src="<%= profile_image_url %>" />
+          </div>
+          <div class="content">
+            <h1>@<%= from_user %></h1>
+            <p><%= text %></p>
+          </div>
+        </div>
       </script>
     </section>
 
