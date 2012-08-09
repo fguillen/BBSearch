@@ -22,12 +22,27 @@
 
   <style>
 
+    #results-1 {
+      padding: 10px;
+      background-color: white;
+      width: 560px;
+    }
+
+    #results-1 em {
+      color: #ccc;
+      font-size: 12px;
+    }
+
+    #results-1 p{
+      font-size: 14px;
+    }
+
     .arrow-up {
       width: 0;
       height: 0;
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-bottom: 10px solid #ccc;
+      border-bottom: 10px solid white;
     }
 
     div#results {
@@ -114,25 +129,45 @@ $(&lt;selector&gt;).bbsearch({
     <p><strong>*</strong> required</p>
 
     <section>
-      <h1>Twitter Search API</h1>
+      <h1>Example 1: Twitter Search API (simple)</h1>
       <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
-      Click any letter on it and wait for results.</p>
-      <input id="search-input" class="big" />
-      <div id="results-wrapper">
+      Click any text on it and wait for results.</p>
+      <input id="search-input-1" class="big" />
+      <div id="results-1"></div>
+
+      <script>
+        $(function(){
+          $("#search-input-1").bbsearch({
+            url: "http://search.twitter.com/search.json?callback=?&q=",
+            itemTemplate: "<p><em>@<%= from_user %></em> <%= text %></p>",
+            resultsElement: $("#results-1"),
+            parse: function( response ){ return response.results; },
+          });
+        });
+      </script>
+    </section>
+
+
+    <section>
+      <h1>Example 2: Twitter Search API (styled)</h1>
+      <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
+      Write any text on it and wait for results. The results are clickable and the twitt will be setted at the input field.</p>
+      <input id="search-input-2" class="big" />
+      <div id="results-wrapper-2">
         <div class="arrow-up"></div>
-        <div id="results"></div>
+        <div class="results"></div>
       </div>
 
       <script>
         $(function(){
-          $("#search-input").bbsearch({
+          $("#search-input-2").bbsearch({
             url: "http://search.twitter.com/search.json?callback=?&q=",
             itemTemplate: $("#template-result").html(),
-            resultsElement: "#results",
-            onClick: function( model ){ console.log( "handler", model ); $("#search-input").val( model.get( "text" ) ) },
+            resultsElement: $("#results-wrapper-2 > .results"),
+            onClick: function( model ){ $("#search-input-2").val( model.get( "text" ) ) },
             parse: function( response ){ return response.results; },
           });
-        })
+        });
       </script>
 
       <script type="text/template" id="template-result">
