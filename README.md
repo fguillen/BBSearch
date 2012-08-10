@@ -72,8 +72,13 @@ Tested in:
 
 ## TODO
 
-* Check for performance issues
-* Improve the slideOut and In animations
+* loading
+* wait 2 seconds for fetch
+* slow showing and hidding
+* parse text to http compatible
+* last key not sent
+* readme
+* tests
 
 ## License
 

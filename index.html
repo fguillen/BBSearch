@@ -22,79 +22,93 @@
 
   <style>
 
+    /* Example 1 */
     #results-1 {
-      padding: 10px;
-      background-color: white;
-      width: 560px;
-    }
-
-    #results-1 em {
-      color: #ccc;
-      font-size: 12px;
+      width: 600px;
     }
 
     #results-1 p{
       font-size: 14px;
+      line-height: 14px;
+      font-style: italic;
     }
 
-    .arrow-up {
+    /* Example 2 */
+    #results-wrapper-2 {
+      position: relative;
+      margin-top: -5px;
+      z-index: 100;
+    }
+
+    #results-wrapper-2 .arrow-up {
+      margin-left: 10px;
       width: 0;
       height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid white;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 15px solid #ccc;
     }
 
-    div#results {
-      width: 560px;
+    #results-wrapper-2 .results {
+      width: 600px;
       border: 1px solid #ccc;
     }
 
-    div.result{
+    #results-wrapper-2 .result{
      padding: 5px;
      border-bottom: 1px dotted #ccc;
-     width: 560px;
      overflow: hidden;
      background-color: white;
      box-sizing: border-box;
     }
 
-    div.result:hover {
+    #results-wrapper-2 .result:hover {
       background-color: #ccc;
       cursor: pointer;
     }
 
-    div.result:hover div.content h1 {
+    #results-wrapper-2 .result:hover .content h1 {
       color: white;
     }
 
-    div.result div.avatar {
+    #results-wrapper-2 .result .avatar {
       float: left;
       width: 60px;
     }
 
-    div.result div.avatar img{
+    #results-wrapper-2 .result .avatar img{
       width: 60px;
       height: 60px;
     }
 
-    div.result div.content {
+    #results-wrapper-2 .result .content {
       float: left;
-      width: 480px;
+      width: 520px;
       margin-left: 10px;
     }
 
-    div.result div.content h1 {
+    #results-wrapper-2 .result .content h1 {
       font-size: 12px;
       color: #ccc;
       margin-bottom: 5px;
     }
 
-    div.result div.content p {
+    #results-wrapper-2 .result .content p {
       color: black;
       font-size: 16px;
       font-style: italic;
       line-height: 16px
+    }
+
+    #loading {
+      width: 20px;
+      margin-left: -20px;
+      margin-top: 8px;
+      float: left;
+    }
+
+    #loading img {
+      display: none;
     }
   </style>
 
@@ -139,7 +153,7 @@ $(&lt;selector&gt;).bbsearch({
         $(function(){
           $("#search-input-1").bbsearch({
             url: "http://search.twitter.com/search.json?callback=?&q=",
-            itemTemplate: "<p><em>@<%= from_user %></em> <%= text %></p>",
+            itemTemplate: "<p>\"<%= text %>\"</p>",
             resultsElement: $("#results-1"),
             parse: function( response ){ return response.results; },
           });
@@ -152,6 +166,7 @@ $(&lt;selector&gt;).bbsearch({
       <h1>Example 2: Twitter Search API (styled)</h1>
       <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
       Write any text on it and wait for results. The results are clickable and the twitt will be setted at the input field.</p>
+      <div id="loading"><img src="./assets/loading.gif" /></div>
       <input id="search-input-2" class="big" />
       <div id="results-wrapper-2">
         <div class="arrow-up"></div>
@@ -165,6 +180,8 @@ $(&lt;selector&gt;).bbsearch({
             itemTemplate: $("#template-result").html(),
             resultsElement: $("#results-wrapper-2 > .results"),
             onClick: function( model ){ $("#search-input-2").val( model.get( "text" ) ) },
+            onStart: function(){ $("#loading img").fadeIn( "fast" ); },
+            onEnd: function(){ $("#loading img").fadeOut( "fast" ); },
             parse: function( response ){ return response.results; },
           });
         });
