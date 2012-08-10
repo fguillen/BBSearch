@@ -161,10 +161,11 @@ $("#search-input-1").bbsearch({
 
       <script>
         $(function(){
-          $("#search-input-1").bbsearch({
+          new BBSearch({
             url: "https://api.github.com/legacy/repos/search/#bbsearch-query#?callback=?&",
-            itemTemplate: "<p>[@<%= owner %>] <a href=\"<%= url %>\"><%= name %></a></p>",
+            inputElement: $("#search-input-1"),
             resultsElement: $("#results-1"),
+            itemTemplate: "<p>[@<%= owner %>] <a href=\"<%= url %>\"><%= name %></a></p>",
             parse: function( response ){ return response.data.repositories; }
           });
         });
@@ -185,10 +186,11 @@ $("#search-input-1").bbsearch({
 
       <script>
         $(function(){
-          $("#search-input-2").bbsearch({
+          new BBSearch({
             url: "http://search.twitter.com/search.json?callback=?&q=",
-            itemTemplate: $("#template-result").html(),
+            inputElement: $("#search-input-2"),
             resultsElement: $("#results-wrapper-2 > .results"),
+            itemTemplate: $("#template-result").html(),
             onClick: function( model ){
               $("#search-input-2").val( model.get( "text" ) )
             },
