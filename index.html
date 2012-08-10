@@ -134,7 +134,6 @@ $(&lt;selector&gt;).bbsearch({
   url:              &lt;* url of the search API, the search query will be sent into a 'q' param&gt;,
   itemTemplate:     &lt;* Underscore-style template for the result elements&gt;,
   resultsElement:   &lt;* The results container element, an 'ul' element will be appended to it&gt;,
-  loadingElement:   &lt;The loading element will be shown and hidden while fetching&gt;
   onClick:          &lt;onclick handler&gt;,
   onRequest:        &lt;start request handler&gt;,
   onResponse:       &lt;end of request handler&gt;,
@@ -187,8 +186,8 @@ $(&lt;selector&gt;).bbsearch({
               $("#results-wrapper-2").slideUp( "fast" );
               $("#loading img").fadeIn( "fast" );
             },
-            onEnd: function(){
-              $("#results-wrapper-2").slideDown( "fast" );
+            onEnd: function( collection ){
+              if( collection.length > 0 ) $("#results-wrapper-2").slideDown( "slow" );
               $("#loading img").fadeOut( "fast" );
             },
             parse: function( response ){
