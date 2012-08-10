@@ -152,10 +152,10 @@ $(&lt;selector&gt;).bbsearch({
       <script>
         $(function(){
           $("#search-input-1").bbsearch({
-            url: "http://search.twitter.com/search.json?callback=?&q=",
-            itemTemplate: "<p>\"<%= text %>\"</p>",
+            url: "https://api.github.com/legacy/repos/search/",
+            itemTemplate: "<p>\"<%= name %>\"</p>",
             resultsElement: $("#results-1"),
-            parse: function( response ){ return response.results; },
+            parse: function( response ){ return response.repositories; },
           });
         });
       </script>
