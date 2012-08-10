@@ -143,17 +143,17 @@ $(&lt;selector&gt;).bbsearch({
     <p><strong>*</strong> required</p>
 
     <section>
-      <h1>Example 1 (simple): GoogleMaps</h1>
-      <p>This remote-auto-search element is connected to <a href="https://developers.google.com/maps/?hl=es">Google Maps API</a>.
-      Click any address on it and wait for results.</p>
+      <h1>Example 1: Twitter Search API (simple)</h1>
+      <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
+      Click any text on it and wait for results.</p>
       <input id="search-input-1" class="big" />
       <div id="results-1"></div>
 
       <script>
         $(function(){
           $("#search-input-1").bbsearch({
-            url: "http://maps.google.com/maps/api/geocode/json?sensor=true&address=",
-            itemTemplate: "<p>\"<%= formatted_address %>\"</p>",
+            url: "http://search.twitter.com/search.json?callback=?&q=",
+            itemTemplate: "<p>\"<%= text %>\"</p>",
             resultsElement: $("#results-1"),
             parse: function( response ){ return response.results; },
           });
@@ -163,7 +163,7 @@ $(&lt;selector&gt;).bbsearch({
 
 
     <section>
-      <h1>Example 2 (styled/complex): Twitter Search API (styled)</h1>
+      <h1>Example 2: Twitter Search API (styled)</h1>
       <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
       Write any text on it and wait for results. The results are clickable and the twitt will be setted at the input field.</p>
       <div id="loading"><img src="./assets/loading.gif" /></div>
