@@ -72,11 +72,7 @@ Tested in:
 
 ## TODO
 
-* loading
-* wait 2 seconds for fetch
-* slow showing and hidding
 * parse text to http compatible
-* last key not sent
 * readme
 * tests
 
