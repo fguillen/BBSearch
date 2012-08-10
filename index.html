@@ -30,7 +30,6 @@
     #results-1 p{
       font-size: 14px;
       line-height: 14px;
-      font-style: italic;
     }
 
     /* Example 2 */
@@ -143,19 +142,30 @@ $(&lt;selector&gt;).bbsearch({
     <p><strong>*</strong> required</p>
 
     <section>
-      <h1>Example 1: Twitter Search API (simple)</h1>
-      <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
+      <h1>Example 1 (simple): Github Search API</h1>
+      <p>This remote-auto-search element is connected to <a href="http://developer.github.com/v3/">Github search API</a>.
       Click any text on it and wait for results.</p>
+      <h2>Code</h2>
+<pre>
+$("#search-input-1").bbsearch({
+  url: "https://api.github.com/legacy/repos/search/#bbsearch-query#?callback=?&",
+  itemTemplate: "&lt;p&gt;[@&lt;%= owner %&gt;] &lt;a href=\"&lt;%= url %&gt;\"&gt;&lt;%= name %&gt;&lt;/a&gt;&lt;/p&gt;",
+  resultsElement: $("#results-1"),
+  parse: function( response ){ return response.data.repositories; }
+});
+</pre>
+
+
       <input id="search-input-1" class="big" />
       <div id="results-1"></div>
 
       <script>
         $(function(){
           $("#search-input-1").bbsearch({
-            url: "https://api.github.com/legacy/repos/search/",
-            itemTemplate: "<p>\"<%= name %>\"</p>",
+            url: "https://api.github.com/legacy/repos/search/#bbsearch-query#?callback=?&",
+            itemTemplate: "<p>[@<%= owner %>] <a href=\"<%= url %>\"><%= name %></a></p>",
             resultsElement: $("#results-1"),
-            parse: function( response ){ return response.repositories; },
+            parse: function( response ){ return response.data.repositories; }
           });
         });
       </script>
@@ -163,7 +173,7 @@ $(&lt;selector&gt;).bbsearch({
 
 
     <section>
-      <h1>Example 2: Twitter Search API (styled)</h1>
+      <h1>Example 2 (styled/events): Twitter Search API</h1>
       <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
       Write any text on it and wait for results. The results are clickable and the twitt will be setted at the input field.</p>
       <div id="loading"><img src="./assets/loading.gif" /></div>
@@ -184,7 +194,7 @@ $(&lt;selector&gt;).bbsearch({
             },
             onStart: function(){
               $("#results-wrapper-2").slideUp( "fast" );
-              $("#loading img").fadeIn( "fast" );
+              $("#loading img").show();
             },
             onEnd: function( collection ){
               if( collection.length > 0 ) $("#results-wrapper-2").slideDown( "slow" );
@@ -214,7 +224,7 @@ $(&lt;selector&gt;).bbsearch({
       <p>
         <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a>
         <br />
-        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">MDMagick jQuery plugin</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://fernandoguillen.info" property="cc:attributionName" rel="cc:attributionURL">Fernando Guillen</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
+        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">BBSearch Backbone/jQuery plugin</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://fernandoguillen.info" property="cc:attributionName" rel="cc:attributionURL">Fernando Guillen</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
       </p>
     </footer>
   </div>

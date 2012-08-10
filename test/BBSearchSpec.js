@@ -1,4 +1,4 @@
-describe( "MDMagick", function(){
+describe( "BBSearch", function(){
   afterEach(function() {
     $("#section-2 .mdm-input").val( "This is the text, with **bold** and _italic_." );
   });

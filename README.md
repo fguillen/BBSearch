@@ -75,6 +75,7 @@ Tested in:
 * parse text to http compatible
 * readme
 * tests
+* test browsers
 
 ## License
 

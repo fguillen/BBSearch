@@ -58,6 +58,11 @@ section > h1 {
   padding-bottom: 0.2em;
 }
 
+section > h2 {
+  font-size: 1em;
+  margin-bottom: 0px;
+}
+
 section p {
   margin-bottom: 0.5em;
 }
