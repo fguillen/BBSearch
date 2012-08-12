@@ -16,9 +16,14 @@
   <script src="./vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="./vendor/underscore.js" type="text/javascript" charset="utf-8"></script>
   <script src="./vendor/backbone.js" type="text/javascript" charset="utf-8"></script>
-  <script src="https://raw.github.com/gist/3182810/95fbc0af043412d5083be2669b7cd5d0c771f9ee/ajax_events.js" type="text/javascript" charset="utf-8"></script>
   <script src="./lib/bbsearch.js" type="text/javascript" charset="utf-8"></script>
 
+  <!-- syntax highlighting -->
+  <link href="./assets/rainbow/themes/github.css" rel="stylesheet" type="text/css">
+  <script src="./assets/rainbow/js/rainbow.min.js"></script>
+  <script src="./assets/rainbow/js/language/generic.js"></script>
+  <script src="./assets/rainbow/js/language/javascript.js"></script>
+  <script src="./assets/rainbow/js/language/html.js"></script>
 
   <style>
 
@@ -128,32 +133,50 @@
 
 
     <h3>Use</h3>
-<pre>
-$(&lt;selector&gt;).bbsearch({
-  url:              &lt;* url of the search API, the search query will be sent into a 'q' param&gt;,
-  itemTemplate:     &lt;* Underscore-style template for the result elements&gt;,
-  resultsElement:   &lt;* The results container element, an 'ul' element will be appended to it&gt;,
-  onClick:          &lt;onclick handler&gt;,
-  onRequest:        &lt;start request handler&gt;,
-  onResponse:       &lt;end of request handler&gt;,
-  parse:            &lt;overriding the default Backbone.Collection.parse()&gt;,
+<pre><code data-language="javascript">
+new BBSearch({
+  // (Required) the query will be added at the end of the url
+  url: "http://myapi.server.com/search.json?q=",
+
+  // (Required) reference to the user input field
+  inputElement: $("#my-input"),
+
+  // (Required) reference to the DOM element when the search results will be shown
+  resultsElement: $("#my-results"),
+
+  // (Required) UnderscoreJS style template
+  itemTemplate: "title: <%= title %>",
+
+  // handler for a _click_ in one of the elements
+  // a reference to the actual Backbone.Model will be sent
+  onClick: function( model ){ $("#my-input").val( model.get( "text" ) ) },
+
+  // handler to be called when the search request start
+  onStart: function(){ $("#loading").show();},
+
+  // handler to be called when the search request ends
+  // and all the elements have been rendered
+  onEnd: function( collection ){ $("#loading").hide(); },
+
+  // in case your search response has especial _parse_ needs
+  parse: function( response ){ return response.results; },
 });
-</pre>
-    <p><strong>*</strong> required</p>
+</code></pre>
 
     <section>
       <h1>Example 1 (simple): Github Search API</h1>
       <p>This remote-auto-search element is connected to <a href="http://developer.github.com/v3/">Github search API</a>.
       Click any text on it and wait for results.</p>
-      <h2>Code</h2>
-<pre>
-$("#search-input-1").bbsearch({
+
+      <h2>Code <a href="#show-code" onclick="$('#code-example-1').toggle('fast'); return false;">toggle</a></h2>
+      <div id="code-example-1" class="code">
+<pre><code data-language="javascript">$("#search-input-1").bbsearch({
   url: "https://api.github.com/legacy/repos/search/#bbsearch-query#?callback=?&",
   itemTemplate: "&lt;p&gt;[@&lt;%= owner %&gt;] &lt;a href=\"&lt;%= url %&gt;\"&gt;&lt;%= name %&gt;&lt;/a&gt;&lt;/p&gt;",
   resultsElement: $("#results-1"),
   parse: function( response ){ return response.data.repositories; }
-});
-</pre>
+});</code></pre>
+      </div>
 
 
       <input id="search-input-1" class="big" />
@@ -177,6 +200,31 @@ $("#search-input-1").bbsearch({
       <h1>Example 2 (styled/events): Twitter Search API</h1>
       <p>This remote-auto-search element is connected to <a href="https://dev.twitter.com/docs/api/1/get/search">Twitter search API</a>.
       Write any text on it and wait for results. The results are clickable and the twitt will be setted at the input field.</p>
+
+      <h2>Code <a href="#show-code" onclick="$('#code-example-2').toggle('fast'); return false;">toggle</a></h2>
+      <div id="code-example-2" class="code">
+<pre><code data-language="javascript">new BBSearch({
+  url: "http://search.twitter.com/search.json?callback=?&q=",
+  inputElement: $("#search-input-2"),
+  resultsElement: $("#results-wrapper-2 > .results"),
+  itemTemplate: $("#template-result").html(),
+  onClick: function( model ){
+    $("#search-input-2").val( model.get( "text" ) )
+  },
+  onStart: function(){
+    $("#results-wrapper-2").slideUp( "fast" );
+    $("#loading img").show();
+  },
+  onEnd: function( collection ){
+    if( collection.length > 0 ) $("#results-wrapper-2").slideDown( "slow" );
+    $("#loading img").fadeOut( "fast" );
+  },
+  parse: function( response ){
+    return response.results;
+  },
+});</code></pre>
+      </div>
+
       <div id="loading"><img src="./assets/loading.gif" /></div>
       <input id="search-input-2" class="big" />
       <div id="results-wrapper-2">

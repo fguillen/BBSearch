@@ -12,6 +12,7 @@ pre {
   font-family: "Consolas", monospace;
   padding: 10px;
   background-color: white;
+  font-size: 12px;
 }
 
 h1, h2, h3 {
@@ -83,4 +84,8 @@ textarea.big {
   width: 600px;
   padding: 5px;
   font-size: 12px;
+}
+
+.code {
+  display: none;
 }

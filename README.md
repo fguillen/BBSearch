@@ -1,14 +1,20 @@
 # BBSearch
 
-jQuery plugin to transform an _input field_ in a auto-search element based on Backbone
+JS plugin to transform an _input field_ in a auto-search element based on Backbone.
 
 Check the [demo page](http://fguillen.github.com/BBSearch)
 
 ## How it works
 
-    $(<selector>).bbsearch({
+BBSearch will be listening to _key events_ in an input field and sending _requests_ to an expecified json URL.
 
-    })
+BBSearch will parse the _response_ and render the results into _li_ elements based in the template you have defined.
+
+BBSearch allows to _binding events_ like:
+
+* **onClick**: into one of the results elements
+* **onStart**: when the search request start
+* **onEnd**: when the search request ends and all the elements have been rendered
 
 ## Version
 
@@ -16,20 +22,51 @@ Check the [demo page](http://fguillen.github.com/BBSearch)
 
 ## Usage
 
-### Explicitly
+### Basic configuration
 
-Using the `$(<selector>).mdmagick()` call:
+    new BBSearch({
+      // (Required) the query will be added at the end of the url
+      url: "http://myapi.server.com/search.json?q=",
 
-    <textarea id="my-textarea"></textarea>
-    <script>
-      $(function(){ $("#my-textarea").mdmagick(); })
-    </script>
+      // (Required) reference to the user input field
+      inputElement: $("#my-input"),
 
-or Implicitly:
+      // (Required) reference to the DOM element when the search results will be shown
+      resultsElement: $("#my-results"),
 
-Adding the special class `mdm-input` to any input field:
+      // (Required) UnderscoreJS style template
+      itemTemplate: "title: <%= title %>"
+    });
 
-    <textarea class="mdm-input"></textarea>
+### Complete configuration
+
+    new BBSearch({
+      // (Required) the query will be added at the end of the url
+      url: "http://myapi.server.com/search.json?q=",
+
+      // (Required) reference to the user input field
+      inputElement: $("#my-input"),
+
+      // (Required) reference to the DOM element when the search results will be shown
+      resultsElement: $("#my-results"),
+
+      // (Required) UnderscoreJS style template
+      itemTemplate: "title: <%= title %>",
+
+      // handler for a _click_ in one of the elements
+      // a reference to the actual Backbone.Model will be sent
+      onClick: function( model ){ $("#my-input").val( model.get( "text" ) ) },
+
+      // handler to be called when the search request start
+      onStart: function(){ $("#loading").show();},
+
+      // handler to be called when the search request ends
+      // and all the elements have been rendered
+      onEnd: function( collection ){ $("#loading").hide(); },
+
+      // in case your search response has especial _parse_ needs
+      parse: function( response ){ return response.results; },
+    });
 
 ## Browsers support
 
@@ -41,46 +78,35 @@ Tested in:
 
 ## Dependencies
 
-* jquery
-* [a-tools](http://archive.plugins.jquery.com/project/a-tools)
-* [showdown](https://github.com/coreyti/showdown/)
+* [jquery](http://jquery.com)
+* [underscorejs](http://underscorejs.org)
+* [backbonejs](http://backbonejs.org)
 
 ## Install
 
-##### 1. Download [the last version of the code](https://github.com/fguillen/MDMagick/zipball/master).
+##### 1. Download [the last version of the code](https://github.com/fguillen/BBSearch/zipball/master).
 ##### 2. Unzip the package
-##### 3. Copy `vendor`, `lib` and `assets` folders to a _public_ folder in your web application. Let's call it `mdmagick`.
+##### 3. Copy `vendor` and `lib` folders to a _public_ folder in your web application. Let's call it `bbsearch`.
 ##### 4. Import the dependencies:
 
-    <script src="./mdmagick/vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
-    <script src="./mdmagick/vendor/a-tools.js" type="text/javascript" charset="utf-8"></script>
-    <script src="./mdmagick/vendor/showdown.js" type="text/javascript" charset="utf-8"></script>
-
-##### 5. Import the mdmagick plugin:
-
-    <script src="./mdmagick/lib/mdmagick.js" type="text/javascript" charset="utf-8"></script>
-
-##### 6. Import the mdmagick styles and icons
-
-    <link rel="stylesheet" href="./mdmagick/assets/mdmagick.css" ></style>
-    <link rel="stylesheet" href="./mdmagick/assets/icon_font/style.css" />
-    <!--[if lte IE 7]><script src="./mdmagick/assets/icon_font/lte-ie7.js"></script><![endif]-->
-
-##### 7. You are ready!
+    <script src="./bbsearch/vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./bbsearch/vendor/underscore.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./bbsearch/vendor/backbone.js" type="text/javascript" charset="utf-8"></script>
 
 **Note**: if you application is already importing some of the _dependencies_ you have not to do it twice.
 
+##### 5. Import the bbsearch plugin:
+
+    <script src="./bbsearch/lib/bbsearch.js" type="text/javascript" charset="utf-8"></script>
+
+##### 6. You are ready!
+
+
 ## TODO
 
-* parse text to http compatible
-* readme
-* tests
-* test browsers
+* check in more browsers
+
 
 ## License
 
 This work is licensed under the Creative Commons Attribution 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
-
-## Attributions
-
-* Icons used in the control div from: [IcoMoon](http://keyamoon.com/icomoon/#toHome)
