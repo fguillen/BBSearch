@@ -26,6 +26,8 @@ BBSearch allows to _binding events_ like:
 
     new BBSearch({
       // (Required) the query will be added at the end of the url
+      // you can also use the "#bbsearch-query#" placeholder to insert the query
+      // in any part of the url
       url: "http://myapi.server.com/search.json?q=",
 
       // (Required) reference to the user input field
@@ -42,6 +44,8 @@ BBSearch allows to _binding events_ like:
 
     new BBSearch({
       // (Required) the query will be added at the end of the url
+      // you can also use the "#bbsearch-query#" placeholder to insert the query
+      // in any part of the url
       url: "http://myapi.server.com/search.json?q=",
 
       // (Required) reference to the user input field

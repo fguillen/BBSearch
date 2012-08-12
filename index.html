@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="BBSearch is a jQuery plugin that takes an input-field and transform it into an auto-search element based on Backbone" />
-  <meta name="keywords" content="jQuery, plugin, auto-search, backbone" />
+  <meta name="description" content="BBSearch is JS plugin to transform an input field in an auto-search element based on Backbone." />
+  <meta name="keywords" content="Backbone, jQuery, plugin, auto-search, auto-complete" />
   <meta name="author" content="http://fernandoguillen.info" />
 
   <title>BBSearch</title>
@@ -121,7 +121,7 @@
 <body>
   <div id="container">
     <h1>BBSearch</h1>
-    <h2>BBSearch is a jQuery plugin that takes an input-field and transform it into a remote-auto-search element based on Backbone</h2>
+    <h2>BBSearch is a JS plugin to transform an <em>input field</em> in an auto-search element based on Backbone.</h2>
     <p>
       <ul>
         <li><a href="https://github.com/fguillen/BBSearch">BBSearch's code</a></li>
@@ -136,6 +136,8 @@
 <pre><code data-language="javascript">
 new BBSearch({
   // (Required) the query will be added at the end of the url
+  // you can also use the "#bbsearch-query#" placeholder to insert the query
+  // in any part of the url
   url: "http://myapi.server.com/search.json?q=",
 
   // (Required) reference to the user input field
@@ -274,7 +276,7 @@ new BBSearch({
       <p>
         <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a>
         <br />
-        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">BBSearch Backbone/jQuery plugin</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://fernandoguillen.info" property="cc:attributionName" rel="cc:attributionURL">Fernando Guillen</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
+        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">BBSearch Backbone/JS plugin</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://fernandoguillen.info" property="cc:attributionName" rel="cc:attributionURL">Fernando Guillen</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
       </p>
     </footer>
   </div>
