@@ -172,12 +172,16 @@ new BBSearch({
 
       <h2>Code <a href="#show-code" onclick="$('#code-example-1').toggle('fast'); return false;">toggle</a></h2>
       <div id="code-example-1" class="code">
-<pre><code data-language="javascript">$("#search-input-1").bbsearch({
+<pre><code data-language="javascript">
+new BBSearch({
   url: "https://api.github.com/legacy/repos/search/#bbsearch-query#?callback=?&",
-  itemTemplate: "&lt;p&gt;[@&lt;%= owner %&gt;] &lt;a href=\"&lt;%= url %&gt;\"&gt;&lt;%= name %&gt;&lt;/a&gt;&lt;/p&gt;",
+  inputElement: $("#search-input-1"),
   resultsElement: $("#results-1"),
+  itemTemplate: '<p>[@<%= owner %>] <a href="<%= url %>"><%= name %></a></p>',
   parse: function( response ){ return response.data.repositories; }
-});</code></pre>
+});
+
+</code></pre>
       </div>
 
 
