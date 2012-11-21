@@ -193,7 +193,7 @@ new BBSearch({
             url: "https://api.github.com/legacy/repos/search/#bbsearch-query#?callback=?&",
             inputElement: $("#search-input-1"),
             resultsElement: $("#results-1"),
-            itemTemplate: "<p>[@<%= owner %>] <a href=\"<%= url %>\"><%= name %></a></p>",
+            itemTemplate: "<p>[@<%= owner %>] <a href=\"https://github.com/<%= owner %>/<%= name %>\"><%= name %></a></p>",
             parse: function( response ){ return response.data.repositories; }
           });
         });
